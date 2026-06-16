@@ -1,0 +1,373 @@
+---
+import Layout from "../layouts/Layout.astro";
+
+const U = "https://images.unsplash.com/";
+const img = {
+  hero: U + "photo-1414235077428-338989a2e8c0?auto=format&fit=crop&w=2000&q=80",
+  story: U + "photo-1498579150354-977475b7ea0b?auto=format&fit=crop&w=1100&q=80",
+  pasta: U + "photo-1551183053-bf91a1d81141?auto=format&fit=crop&w=900&q=80",
+  pizza: U + "photo-1513104890138-7c749659a591?auto=format&fit=crop&w=900&q=80",
+  wine: U + "photo-1510812431401-41d2bd2722f3?auto=format&fit=crop&w=900&q=80",
+  dolci: U + "photo-1571877227200-a0d98ea607e9?auto=format&fit=crop&w=900&q=80",
+  antipasti: U + "photo-1541014741259-de529411b96a?auto=format&fit=crop&w=900&q=80",
+  interior: U + "photo-1517248135467-4c7edcad34c4?auto=format&fit=crop&w=900&q=80",
+};
+
+const menu = [
+  {
+    cat: "Antipasti",
+    items: [
+      { name: "Bruschetta al Pomodoro", desc: "Grzanki z pieca, pomidory San Marzano, bazylia, oliwa extra vergine", price: "24 zł" },
+      { name: "Burrata Pugliese", desc: "Kremowa burrata, suszone pomidory, rukola, pesto z bazylii", price: "39 zł" },
+      { name: "Tagliere della Casa", desc: "Deska włoskich serów i wędlin, oliwki, grissini", price: "59 zł" },
+    ],
+  },
+  {
+    cat: "Pasta",
+    items: [
+      { name: "Tagliatelle al Ragù", desc: "Domowy makaron, wolno duszone ragù z wołowiny, parmigiano", price: "42 zł" },
+      { name: "Cacio e Pepe", desc: "Pecorino romano, świeżo mielony pieprz, masło", price: "36 zł" },
+      { name: "Gnocchi al Pesto", desc: "Kopytka ziemniaczane, pesto genovese, orzeszki pinii", price: "38 zł" },
+    ],
+  },
+  {
+    cat: "Forno a legna",
+    items: [
+      { name: "Margherita D.O.P.", desc: "Mozzarella fior di latte, pomidory, bazylia, oliwa", price: "34 zł" },
+      { name: "Diavola", desc: "Pikantna salami, mozzarella, papryczki, miód", price: "41 zł" },
+      { name: "Quattro Formaggi", desc: "Cztery sery, miód, świeże zioła", price: "43 zł" },
+    ],
+  },
+  {
+    cat: "Dolci",
+    items: [
+      { name: "Tiramisù della Nonna", desc: "Klasyczne, według przepisu babci Luigiego", price: "26 zł" },
+      { name: "Panna Cotta", desc: "Wanilia z Madagaskaru, sos z owoców leśnych", price: "24 zł" },
+    ],
+  },
+];
+
+const galeria = [
+  { src: img.pasta, alt: "Świeża pasta tagliatelle", span: "row-span-2" },
+  { src: img.pizza, alt: "Pizza z pieca opalanego drewnem", span: "" },
+  { src: img.wine, alt: "Lampka czerwonego wina", span: "" },
+  { src: img.interior, alt: "Wnętrze trattorii", span: "row-span-2" },
+  { src: img.antipasti, alt: "Antipasti — deska serów i wędlin", span: "" },
+  { src: img.dolci, alt: "Tiramisù", span: "" },
+];
+---
+
+<Layout>
+  <!-- ===================== NAV ===================== -->
+  <nav
+    id="nav"
+    class="fixed inset-x-0 top-0 z-40 transition-all duration-500"
+  >
+    <div class="mx-auto flex max-w-7xl items-center justify-between px-6 py-5 lg:px-10">
+      <a href="#top" class="group flex items-center gap-2.5">
+        <span class="inline-block h-2.5 w-2.5 rotate-45 bg-terracotta transition-transform group-hover:rotate-[135deg]"></span>
+        <span class="nav-logo font-display text-xl font-600 tracking-tight">Trattoria&nbsp;Verde</span>
+      </a>
+
+      <div class="hidden items-center gap-9 md:flex">
+        <a href="#story" class="nav-link text-sm font-500 tracking-wide">O nas</a>
+        <a href="#menu" class="nav-link text-sm font-500 tracking-wide">Menu</a>
+        <a href="#galeria" class="nav-link text-sm font-500 tracking-wide">Galeria</a>
+        <a href="#kontakt" class="nav-link text-sm font-500 tracking-wide">Kontakt</a>
+        <a
+          href="#rezerwacja"
+          class="rounded-full bg-olive px-5 py-2.5 text-sm font-600 text-paper transition-all hover:bg-terracotta hover:shadow-lg"
+          >Rezerwacja</a
+        >
+      </div>
+
+      <button id="burger" class="md:hidden" aria-label="Menu">
+        <svg class="nav-logo h-7 w-7" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24">
+          <path stroke-linecap="round" d="M3.75 6.75h16.5M3.75 12h16.5M3.75 17.25h16.5" />
+        </svg>
+      </button>
+    </div>
+
+    <div id="mobile-menu" class="hidden border-t border-ink/10 bg-paper px-6 py-5 md:hidden">
+      <div class="flex flex-col gap-4">
+        <a href="#story" class="text-base font-500">O nas</a>
+        <a href="#menu" class="text-base font-500">Menu</a>
+        <a href="#galeria" class="text-base font-500">Galeria</a>
+        <a href="#kontakt" class="text-base font-500">Kontakt</a>
+        <a href="#rezerwacja" class="rounded-full bg-olive px-5 py-3 text-center font-600 text-paper">Rezerwacja</a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- ===================== HERO ===================== -->
+  <header id="top" class="relative flex min-h-screen items-center overflow-hidden bg-ink">
+    <div class="absolute inset-0 z-0">
+      <img src={img.hero} alt="Stół w trattorii" class="slowzoom h-full w-full object-cover" />
+      <div class="absolute inset-0 bg-gradient-to-b from-ink/70 via-ink/45 to-ink/80"></div>
+    </div>
+
+    <div class="relative z-10 mx-auto w-full max-w-7xl px-6 pt-28 lg:px-10">
+      <div class="max-w-3xl">
+        <p class="rise font-script text-2xl text-gold sm:text-3xl" style="animation-delay:.1s">
+          Benvenuti · od 1987 roku
+        </p>
+        <h1
+          class="rise mt-3 font-display text-5xl font-500 leading-[0.95] tracking-tight text-paper sm:text-7xl lg:text-8xl"
+          style="animation-delay:.25s"
+        >
+          Kuchnia włoska<br /><span class="italic text-cream">z sercem.</span>
+        </h1>
+        <p class="rise mt-7 max-w-xl text-lg leading-relaxed text-paper/85 sm:text-xl" style="animation-delay:.45s">
+          Domowa pasta robiona każdego ranka, pizza z pieca opalanego drewnem
+          i wina z małych rodzinnych winnic. Zapraszamy do stołu jak do domu.
+        </p>
+        <div class="rise mt-9 flex flex-wrap items-center gap-4" style="animation-delay:.6s">
+          <a
+            href="#rezerwacja"
+            class="rounded-full bg-terracotta px-8 py-4 text-base font-600 text-paper shadow-xl transition-all hover:-translate-y-0.5 hover:bg-terracotta-deep"
+            >Zarezerwuj stolik</a
+          >
+          <a
+            href="#menu"
+            class="rounded-full border border-paper/40 px-8 py-4 text-base font-600 text-paper backdrop-blur-sm transition-all hover:bg-paper/10"
+            >Zobacz menu</a
+          >
+        </div>
+      </div>
+    </div>
+
+    <div class="absolute bottom-8 left-1/2 -translate-x-1/2 text-paper/60">
+      <span class="text-xs uppercase tracking-[0.3em]">przewiń</span>
+    </div>
+  </header>
+
+  <!-- ===================== STORY ===================== -->
+  <section id="story" class="relative overflow-hidden py-24 lg:py-32">
+    <div class="mx-auto grid max-w-7xl items-center gap-14 px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
+      <div class="reveal relative">
+        <img src={img.story} alt="Szef kuchni przy pracy" class="aspect-[4/5] w-full rounded-sm object-cover shadow-2xl" />
+        <div class="absolute -bottom-6 -right-4 hidden rounded-sm bg-olive px-8 py-6 text-paper shadow-xl sm:block lg:-right-8">
+          <p class="font-display text-4xl font-600">37</p>
+          <p class="text-sm tracking-wide text-paper/80">lat rodzinnej tradycji</p>
+        </div>
+      </div>
+
+      <div class="reveal">
+        <p class="font-script text-2xl text-terracotta">La nostra storia</p>
+        <h2 class="mt-2 font-display text-4xl font-500 leading-tight tracking-tight sm:text-5xl">
+          Wszystko zaczęło się<br />w małej kuchni w Bolonii
+        </h2>
+        <p class="mt-6 text-lg leading-relaxed text-ink/75">
+          Receptury przywiezione przez nonnę Luigiego przekazujemy z pokolenia
+          na pokolenie. Każdego dnia wyrabiamy makaron ręcznie, a pomidory
+          San Marzano sprowadzamy prosto z Kampanii.
+        </p>
+        <p class="mt-4 text-lg leading-relaxed text-ink/75">
+          U nas liczy się prostota — kilka najlepszych składników, cierpliwość
+          i czas. Tak gotuje się we Włoszech od pokoleń.
+        </p>
+        <blockquote class="mt-8 border-l-2 border-terracotta pl-5 font-display text-2xl italic text-olive">
+          „A tavola non si invecchia.”
+          <span class="mt-1 block font-body text-sm not-italic text-ink/50">— Przy stole się nie starzejemy.</span>
+        </blockquote>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== MENU ===================== -->
+  <section id="menu" class="bg-olive py-24 text-paper lg:py-32">
+    <div class="mx-auto max-w-6xl px-6 lg:px-10">
+      <div class="reveal mb-16 text-center">
+        <p class="font-script text-3xl text-gold">Il Menu</p>
+        <h2 class="mt-1 font-display text-4xl font-500 tracking-tight sm:text-5xl">Nasze specjalności</h2>
+        <p class="mx-auto mt-4 max-w-xl text-paper/70">
+          Karta zmienia się z porami roku. Poniżej kilka pozycji, które
+          najczęściej wracają na Wasze stoły.
+        </p>
+      </div>
+
+      <div class="grid gap-x-16 gap-y-14 md:grid-cols-2">
+        {menu.map((group) => (
+          <div class="reveal">
+            <div class="mb-6 flex items-center gap-4">
+              <h3 class="font-display text-2xl font-600 text-gold">{group.cat}</h3>
+              <span class="h-px flex-1 bg-paper/20"></span>
+            </div>
+            <ul class="space-y-6">
+              {group.items.map((it) => (
+                <li>
+                  <div class="flex items-baseline gap-3">
+                    <span class="font-display text-lg font-500">{it.name}</span>
+                    <span class="h-px flex-1 translate-y-[-3px] border-b border-dotted border-paper/25"></span>
+                    <span class="font-display text-lg text-gold">{it.price}</span>
+                  </div>
+                  <p class="mt-1 text-sm leading-relaxed text-paper/60">{it.desc}</p>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+
+      <p class="reveal mt-16 text-center font-script text-2xl text-paper/70">
+        ...e molto di più — zapytaj kelnera o danie dnia
+      </p>
+    </div>
+  </section>
+
+  <!-- ===================== GALERIA ===================== -->
+  <section id="galeria" class="py-24 lg:py-32">
+    <div class="mx-auto max-w-7xl px-6 lg:px-10">
+      <div class="reveal mb-12 flex flex-wrap items-end justify-between gap-6">
+        <div>
+          <p class="font-script text-2xl text-terracotta">La galleria</p>
+          <h2 class="mt-1 font-display text-4xl font-500 tracking-tight sm:text-5xl">Zajrzyj na talerz</h2>
+        </div>
+        <p class="max-w-sm text-ink/60">
+          Atmosfera, zapach świeżej bazylii i danie, które chce się
+          sfotografować, zanim zniknie.
+        </p>
+      </div>
+
+      <div class="grid auto-rows-[220px] grid-cols-2 gap-4 md:grid-cols-4">
+        {galeria.map((g) => (
+          <figure class={`reveal group relative overflow-hidden rounded-sm ${g.span}`}>
+            <img
+              src={g.src}
+              alt={g.alt}
+              loading="lazy"
+              class="h-full w-full object-cover transition-transform duration-700 group-hover:scale-110"
+            />
+            <div class="absolute inset-0 bg-ink/0 transition-colors duration-500 group-hover:bg-ink/20"></div>
+          </figure>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== REZERWACJA + KONTAKT ===================== -->
+  <section id="rezerwacja" class="bg-cream py-24 lg:py-32">
+    <div class="mx-auto grid max-w-7xl gap-14 px-6 lg:grid-cols-2 lg:gap-20 lg:px-10">
+      <!-- Formularz -->
+      <div class="reveal">
+        <p class="font-script text-2xl text-terracotta">Prenotazione</p>
+        <h2 class="mt-1 font-display text-4xl font-500 tracking-tight sm:text-5xl">Zarezerwuj stolik</h2>
+        <p class="mt-4 text-ink/70">
+          Wypełnij formularz, a oddzwonimy w ciągu godziny, by potwierdzić
+          rezerwację.
+        </p>
+
+        <form class="mt-8 space-y-5" onsubmit="event.preventDefault(); this.reset(); document.getElementById('ok').classList.remove('hidden');">
+          <div class="grid gap-5 sm:grid-cols-2">
+            <label class="block">
+              <span class="text-sm font-600 text-ink/70">Imię i nazwisko</span>
+              <input type="text" required class="mt-2 w-full rounded-sm border border-ink/15 bg-paper px-4 py-3 outline-none transition focus:border-terracotta" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-600 text-ink/70">Telefon</span>
+              <input type="tel" required class="mt-2 w-full rounded-sm border border-ink/15 bg-paper px-4 py-3 outline-none transition focus:border-terracotta" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-600 text-ink/70">Data i godzina</span>
+              <input type="datetime-local" required class="mt-2 w-full rounded-sm border border-ink/15 bg-paper px-4 py-3 outline-none transition focus:border-terracotta" />
+            </label>
+            <label class="block">
+              <span class="text-sm font-600 text-ink/70">Liczba osób</span>
+              <input type="number" min="1" value="2" class="mt-2 w-full rounded-sm border border-ink/15 bg-paper px-4 py-3 outline-none transition focus:border-terracotta" />
+            </label>
+          </div>
+          <label class="block">
+            <span class="text-sm font-600 text-ink/70">Uwagi (opcjonalnie)</span>
+            <textarea rows="3" class="mt-2 w-full rounded-sm border border-ink/15 bg-paper px-4 py-3 outline-none transition focus:border-terracotta"></textarea>
+          </label>
+          <button type="submit" class="rounded-full bg-terracotta px-8 py-4 font-600 text-paper transition-all hover:-translate-y-0.5 hover:bg-terracotta-deep">
+            Wyślij prośbę o rezerwację
+          </button>
+          <p id="ok" class="hidden font-script text-xl text-olive">Grazie! Oddzwonimy, by potwierdzić rezerwację. 🍷</p>
+        </form>
+      </div>
+
+      <!-- Kontakt / godziny -->
+      <div id="kontakt" class="reveal flex flex-col justify-between gap-8">
+        <div class="overflow-hidden rounded-sm shadow-xl">
+          <iframe
+            title="Mapa dojazdu"
+            class="h-64 w-full grayscale-[35%]"
+            loading="lazy"
+            src="https://www.openstreetmap.org/export/embed.html?bbox=21.005%2C52.227%2C21.030%2C52.240&layer=mapnik&marker=52.2335%2C21.0175"
+          ></iframe>
+        </div>
+
+        <div class="grid gap-8 sm:grid-cols-2">
+          <div>
+            <h3 class="font-display text-xl font-600 text-olive">Godziny otwarcia</h3>
+            <ul class="mt-3 space-y-1.5 text-ink/70">
+              <li class="flex justify-between"><span>Pon — Czw</span><span>12:00 – 22:00</span></li>
+              <li class="flex justify-between"><span>Pt — Sob</span><span>12:00 – 23:30</span></li>
+              <li class="flex justify-between"><span>Niedziela</span><span>12:00 – 21:00</span></li>
+            </ul>
+          </div>
+          <div>
+            <h3 class="font-display text-xl font-600 text-olive">Kontakt</h3>
+            <ul class="mt-3 space-y-1.5 text-ink/70">
+              <li>ul. Mokotowska 14</li>
+              <li>00-561 Warszawa</li>
+              <li><a href="tel:+48221234567" class="transition hover:text-terracotta">+48 22 123 45 67</a></li>
+              <li><a href="mailto:ciao@trattoriaverde.pl" class="transition hover:text-terracotta">ciao@trattoriaverde.pl</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FOOTER ===================== -->
+  <footer class="bg-ink py-14 text-paper/70">
+    <div class="mx-auto flex max-w-7xl flex-col items-center gap-6 px-6 text-center lg:flex-row lg:justify-between lg:text-left lg:px-10">
+      <div class="flex items-center gap-2.5">
+        <span class="inline-block h-2.5 w-2.5 rotate-45 bg-terracotta"></span>
+        <span class="font-display text-xl font-600 text-paper">Trattoria Verde</span>
+      </div>
+      <p class="font-script text-xl text-gold">Mangia bene, ridi spesso, ama molto.</p>
+      <div class="flex gap-6 text-sm">
+        <a href="#" class="transition hover:text-paper">Instagram</a>
+        <a href="#" class="transition hover:text-paper">Facebook</a>
+      </div>
+    </div>
+    <p class="mt-8 text-center text-xs text-paper/40">© 2026 Trattoria Verde · Projekt strony — portfolio</p>
+  </footer>
+
+  <style>
+    /* Domyślnie nav na ciemnym hero — jasny tekst */
+    #nav .nav-link,
+    #nav .nav-logo {
+      color: var(--color-paper);
+    }
+    #nav .nav-link {
+      position: relative;
+    }
+    #nav .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: -4px;
+      height: 1.5px;
+      width: 0;
+      background: var(--color-terracotta);
+      transition: width 0.35s ease;
+    }
+    #nav .nav-link:hover::after {
+      width: 100%;
+    }
+    /* Po przewinięciu — jasne tło, ciemny tekst */
+    #nav.scrolled {
+      background: color-mix(in srgb, var(--color-paper) 92%, transparent);
+      backdrop-filter: blur(10px);
+      box-shadow: 0 1px 0 color-mix(in srgb, var(--color-ink) 8%, transparent);
+    }
+    #nav.scrolled .nav-link,
+    #nav.scrolled .nav-logo {
+      color: var(--color-ink);
+    }
+  </style>
+</Layout>
